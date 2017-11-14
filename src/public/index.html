@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>VueJS Sandbox</title>
-	<script src="lib/vue.js"></script>
+  <meta charset="UTF-8">
+  <title>VueJS Sandbox</title>
+  <script src="lib/vue.js"></script>
 </head>
 <body>
-	<div id="app">
-		
-	</div>	
+  <div id="app">
+    <!-- use the v-once directy to prevent the element from rendering
+      after the initial render. This will prevent changes to the data
+      from rendering in the element. -->
+    <h1 v-once>{{ title }}</h1>
+
+    <!-- {{ }} can not be placed in "" (quotes). Insteady, use a
+      directive (v-[directive]) such as v-bind to set an attribute on
+      an element -->
+    <p>{{ sayHello() }} - <a v-bind:href="link">Google</a></p>
+    <hr>
+    <!-- VueJS escapes html by default -->
+    <p>{{ finishedLink }}</p>
+
+    <!-- use v-html directive to stop Vue from escaping html -->
+    <p v-html="finishedLink "></p>
+
+    
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        link: 'http://google.com',
+        title: 'Hello World!',
+        finishedLink: '<a href="http://google.com">Google</a>'
+      },
+      methods: {
+        sayHello: function() {
+          this.title = 'Hi';
+          return this.title;
+        }
+      },
+    });
+    
+  </script>
 </body>
 </html>
