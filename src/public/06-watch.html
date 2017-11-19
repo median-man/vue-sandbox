@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VueJS Sandbox</title>
+  <script src="lib/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- v-model directive creates a two-way binding with a property on data to element's value -->
+    <input type="text" v-model="name">
+    <p>{{ name }}</p>
+
+    <button v-on:click="counter++">Increase</button>
+    <button v-on:click="counter--">Decrease</button>
+    <button v-on:click="counter2++">Increase 2</button>
+    <p>Counter: {{ counter }} | {{ counter2 }}</p>
+    <p>Result: {{ result() }} | {{ output }}</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        name: 'John',
+        counter: 0,
+        counter2: 0,
+      },
+      computed: {
+        // only runs if a data property used in the function is updated where
+        // a method runs every time view is rendered
+        output: function evaluateCounter() {
+          console.log('compute');
+          return this.counter > 5 ? 'Greater 5' : 'Smaller than 5';
+        },
+      },
+      methods: {
+        result: function getResultOfCounter() {
+          console.log('method');
+          return this.counter > 5 ? 'Greater 5' : 'Smaller than 5';
+        },
+      },
+      // watch executes code when data changes (must match data property name)
+      // valuable for responding to an asynchronous change
+      watch: {
+        counter: function delayedCounterReset(value) {
+          setTimeout(() => {
+            this.counter = 0;
+          }, 2000);
+        },
+      },
+    });
+    
+  </script>
+</body>
+</html>
